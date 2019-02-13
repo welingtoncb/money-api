@@ -1,9 +1,8 @@
+import { TabViewModule } from 'primeng/tabview';
+// import { TabViewModule } from 'primeng/primeng';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {TabViewModule} from 'primeng/tabview';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -12,7 +11,6 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     TabViewModule
   ],
   providers: [],
