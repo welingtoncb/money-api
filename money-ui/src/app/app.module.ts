@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { HttpModule } from '@angular/http';
+import { ToastyModule} from 'ng2-toasty';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,8 @@ import { HttpModule } from '@angular/http';
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+
+    ToastyModule.forRoot(),
 
     CoreModule,
     LancamentosModule,
