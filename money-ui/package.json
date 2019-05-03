@@ -26,7 +26,9 @@
     "moment": "^2.24.0",
     "ng2-currency-mask": "^5.3.1",
     "ng2-toasty": "^4.0.3",
+    "portfinder": "^1.0.20",
     "primeng": "^4.1.0-rc.2",
+    "reflect-metadata": "^0.1.13",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
