@@ -9,6 +9,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import { PessoaService } from './../pessoas/pessoa.service';
 import { LancamentoService } from './../lancamentos/lancamento.service';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CategoriaService } from 'app/categorias/categoria.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     PessoaService,
 
     ErrorHandlerService,
+    CategoriaService,
     ConfirmationService,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]

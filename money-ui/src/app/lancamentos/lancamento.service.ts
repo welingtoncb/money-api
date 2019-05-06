@@ -4,6 +4,7 @@ import { URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment';
+import { Lancamento } from 'app/core/model';
 
 export class LancamentoFiltro {
   descricao: string;
@@ -64,4 +65,15 @@ export class LancamentoService {
     .toPromise()
     .then(() => null);
   }
+
+  adicionar(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.lancamentosUrl, JSON.stringify(lancamento), { headers })
+    .toPromise()
+    .then(response => response.json());
+  }
+  
 }

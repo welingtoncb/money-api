@@ -1,8 +1,8 @@
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import { Pessoa } from 'app/core/model';
 
 export class PessoaFiltro {
   nome: string;
@@ -53,5 +53,35 @@ export class PessoaService {
       .toPromise()
       .then(response => response.json().content);
   }
+
+  excluir(codigo: number): Promise<void> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu');
+
+    return this.http.delete(`${this.pessoasUrl}/${codigo}`, { headers })
+      .toPromise()
+      .then(() => null);
+  }
+
+  mudarStatus(codigo: number, ativo: boolean): Promise<void> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, ativo, { headers })
+      .toPromise()
+      .then(() => null);
+  }
+
+  adicionar(pessoa: Pessoa): Promise<Pessoa> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AZ21haWwuY29tOmFkbWlu');
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.pessoasUrl, JSON.stringify(pessoa), { headers })
+    .toPromise()
+    .then(response => response.json());
+  }
+
 
 }

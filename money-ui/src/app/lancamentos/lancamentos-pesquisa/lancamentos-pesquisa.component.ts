@@ -20,7 +20,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private lancamentoService: LancamentoService,
-    private errorHandeler: ErrorHandlerService,
+    private errorHandler: ErrorHandlerService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService
     ) {}
@@ -36,7 +36,7 @@ export class LancamentosPesquisaComponent implements OnInit {
       this.totalRegistros = resultado.total;
       this.lancamentos = resultado.lancamentos;
     })
-    .catch(erro => this.errorHandeler.handle(erro));
+    .catch(erro => this.errorHandler.handle(erro));
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -65,6 +65,6 @@ export class LancamentosPesquisaComponent implements OnInit {
 
         this.toasty.success('Excluído com sucesso');
     })
-    .catch(erro => this.errorHandeler.handle(erro));
+    .catch(erro => this.errorHandler.handle(erro));
   }
 }

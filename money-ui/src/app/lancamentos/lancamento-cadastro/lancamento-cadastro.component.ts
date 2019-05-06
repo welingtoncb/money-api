@@ -1,4 +1,11 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { CategoriaService } from 'app/categorias/categoria.service';
+import { ErrorHandlerService } from 'app/core/error-handler.service';
+import { PessoaService } from 'app/pessoas/pessoa.service';
+import { Lancamento } from 'app/core/model';
+import { LancamentoService } from '../lancamento.service';
+import { ToastyService } from 'ng2-toasty';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -12,20 +19,48 @@ export class LancamentoCadastroComponent implements OnInit {
     { label : 'Despesa', value : 'DESPESA'}
   ];
 
-  categorias = [
-    { label : 'Alimentação', value : 1},
-    { label : 'Transporte', value : 2}
-  ];
+  categorias = [];
+  pessoas = [];
+  lancamento = new Lancamento();
 
-  pessoas = [
-    { label : 'João da Silva', value : 4},
-    { label : 'Sebastião Souza', value : 5},
-    { label : 'Maria Abadia', value : 9}
-  ];
-
-  constructor() { }
+  constructor(
+    private categoriaService: CategoriaService,
+    private pessoaService: PessoaService,
+    private lancamentoService: LancamentoService,
+    private toasty: ToastyService,
+    private errorHandler: ErrorHandlerService
+  ) { }
 
   ngOnInit() {
+    this.carregarCategorias();
+    this.carregarPessoas();
+  }
+
+  salvar(form: FormControl) {
+    this.lancamentoService.adicionar(this.lancamento)
+    .then(()=> {
+      this.toasty.success('Lançamento adicionado com sucesso!');
+
+      form.reset();
+      this.lancamento = new Lancamento();
+    })
+    .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarCategorias() {
+    return this.categoriaService.listarTodas()
+      .then(categorias => {
+        this.categorias = categorias.map(c => ({ label: c.nome, value: c.codigo }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  carregarPessoas() {
+    return this.pessoaService.listarTodas()
+      .then(pessoas => {
+        this.pessoas = pessoas.map(p => ({ label: p.nome, value: p.codigo }));
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
 }
