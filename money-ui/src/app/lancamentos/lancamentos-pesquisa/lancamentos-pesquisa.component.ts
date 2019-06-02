@@ -5,6 +5,7 @@ import { ToastyService } from 'ng2-toasty';
 
 import { ErrorHandlerService } from 'app/core/error-handler.service';
 import { LancamentoService, LancamentoFiltro } from '../lancamento.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -22,10 +23,12 @@ export class LancamentosPesquisaComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private errorHandler: ErrorHandlerService,
     private toasty: ToastyService,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private title: Title
     ) {}
 
   ngOnInit() {
+    this.title.setTitle('Pesquisa de lançamentos');
   }
 
   pesquisar(pagina = 0) {
@@ -57,7 +60,7 @@ export class LancamentosPesquisaComponent implements OnInit {
 
     this.lancamentoService.excluir(lancamento.codigo)
       .then(() => {
-        if(this.grid.first === 0 ){
+        if (this.grid.first === 0 ) {
           this.pesquisar();
         } else {
           this.grid.first = 0;

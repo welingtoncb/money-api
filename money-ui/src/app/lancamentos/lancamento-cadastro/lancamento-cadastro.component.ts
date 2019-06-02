@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from 'app/categorias/categoria.service';
@@ -32,16 +33,17 @@ export class LancamentoCadastroComponent implements OnInit {
     private toasty: ToastyService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit() {
     const codigoLancamento = this.route.snapshot.params['codigo'];
-    
+    this.title.setTitle('Novo lançamento');
     if (codigoLancamento) {
       this.carregarLancamento(codigoLancamento);
     }
-    
+
     this.carregarCategorias();
     this.carregarPessoas();
   }
@@ -54,6 +56,7 @@ export class LancamentoCadastroComponent implements OnInit {
     return this.lancamentoService.buscarPorCodigo(codigo)
     .then(lancamento => {
       this.lancamento = lancamento;
+      // this.atualizarTituloEdicao();
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
@@ -65,7 +68,7 @@ export class LancamentoCadastroComponent implements OnInit {
       this.adicionarLancamento(form);
     }
   }
-  
+
   adicionarLancamento(form: FormControl) {
     this.lancamentoService.adicionar(this.lancamento)
     .then(lancamentoAdicionado => {
@@ -73,7 +76,7 @@ export class LancamentoCadastroComponent implements OnInit {
 
       // form.reset();
       // this.lancamento = new Lancamento();
-      this.router.navigate(['/lancamentos',lancamentoAdicionado.codigo]);
+      this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
@@ -84,19 +87,20 @@ export class LancamentoCadastroComponent implements OnInit {
       this.lancamento = lancamento;
 
       this.toasty.success('Lançamento alterado com sucesso!');
+      this.atualizarTituloEdicao();
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
 
   carregarCategorias() {
     return this.categoriaService.listarTodas()
-      .then(categorias => {this.categorias = categorias.map(c => ({ label: c.nome, value: c.codigo }));})
+      .then(categorias => {this.categorias = categorias.map(c => ({ label: c.nome, value: c.codigo })); })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
   carregarPessoas() {
     return this.pessoaService.listarTodas()
-      .then(pessoas => {this.pessoas = pessoas.map(p => ({ label: p.nome, value: p.codigo }));})
+      .then(pessoas => {this.pessoas = pessoas.map(p => ({ label: p.nome, value: p.codigo })); })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
@@ -110,4 +114,9 @@ export class LancamentoCadastroComponent implements OnInit {
 
     this.router.navigate(['/lancamentos/novo']);
   }
+
+  atualizarTituloEdicao() {
+    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`)
+  }
+
 }
