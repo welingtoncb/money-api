@@ -4,6 +4,7 @@ import { ToastyService } from 'ng2-toasty';
 
 import { ErrorHandlerService } from 'app/core/error-handler.service';
 import { PessoaService, PessoaFiltro } from './../pessoa.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -22,18 +23,23 @@ export class PessoasPesquisaComponent {
     private pessoaService: PessoaService,
     private errorHandler: ErrorHandlerService,
     private confirmation: ConfirmationService,
-    private toasty: ToastyService
-    ) {}
+    private toasty: ToastyService,
+    private title: Title
+  ) { }
+
+  ngOnInit() {
+    this.title.setTitle('Pesquisa de pessoas');
+  }
 
   pesquisar(pagina = 0) {
     this.filtro.pagina = pagina;
 
     this.pessoaService.pesquisar(this.filtro)
-    .then(resultado => {
-      this.totalRegistros = resultado.total;
-      this.pessoas = resultado.pessoas;
-    })
-    .catch(erro => this.errorHandler.handle(erro));
+      .then(resultado => {
+        this.totalRegistros = resultado.total;
+        this.pessoas = resultado.pessoas;
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 
   aoMudarPagina(event: LazyLoadEvent) {
@@ -42,7 +48,7 @@ export class PessoasPesquisaComponent {
   }
 
   confirmarExclusao(pessoa: any) {
-      this.confirmation.confirm({
+    this.confirmation.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
         this.excluir(pessoa);

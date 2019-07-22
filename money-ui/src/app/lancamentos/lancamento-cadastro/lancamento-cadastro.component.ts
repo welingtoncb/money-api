@@ -56,7 +56,6 @@ export class LancamentoCadastroComponent implements OnInit {
     return this.lancamentoService.buscarPorCodigo(codigo)
     .then(lancamento => {
       this.lancamento = lancamento;
-      // this.atualizarTituloEdicao();
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
