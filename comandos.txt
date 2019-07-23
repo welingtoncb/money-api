@@ -7,3 +7,11 @@ Password: admin
 Usuário com menos permissões
 User: maria@gmail.com
 Password: maria
+
+Usuário para conseguir autorização
+User: angular
+Senha:@ngul@r0 
+
+Sites úteis:
+https://www.base64encode.org/
+http://jwt.io
