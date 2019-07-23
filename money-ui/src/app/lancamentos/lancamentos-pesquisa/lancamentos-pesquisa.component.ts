@@ -6,6 +6,7 @@ import { ToastyService } from 'ng2-toasty';
 import { ErrorHandlerService } from 'app/core/error-handler.service';
 import { LancamentoService, LancamentoFiltro } from '../lancamento.service';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'app/seguranca/auth.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -22,6 +23,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   constructor(
     private lancamentoService: LancamentoService,
     private errorHandler: ErrorHandlerService,
+    private auth: AuthService,
     private toasty: ToastyService,
     private confirmation: ConfirmationService,
     private title: Title
