@@ -18,8 +18,8 @@ CREATE TABLE usuario_permissao (
 	FOREIGN KEY (codigo_permissao) REFERENCES permissao(codigo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO usuario (codigo, nome, email, senha) values (1, 'Administrador', 'admin@gmail.com', '$2a$10$X607ZPhQ4EgGNaYKt3n4SONjIv9zc.VMWdEuhCuba7oLAL5IvcL5.');
-INSERT INTO usuario (codigo, nome, email, senha) values (2, 'Maria Silva', 'maria@gmail.com', '$2a$10$Zc3w6HyuPOPXamaMhh.PQOXvDnEsadztbfi6/RyZWJDzimE8WQjaq');
+INSERT INTO usuario (codigo, nome, email, senha) values (1, 'Administrador', 'admin@gmail.com', '$2a$10$5SHzIll5pF6cVfJz4eGDgOODKXbX6k4vFdSZQI6bRAPfa4hOXhzyu');
+INSERT INTO usuario (codigo, nome, email, senha) values (2, 'Maria Silva', 'maria@gmail.com', '$2a$10$F/RzHqScaf5Rtz/lyU9HwON.6z6jzLwC4D3H3ETVg5hDRLeeuKwTS');
 
 INSERT INTO permissao (codigo, descricao) values (1, 'ROLE_CADASTRAR_CATEGORIA');
 INSERT INTO permissao (codigo, descricao) values (2, 'ROLE_PESQUISAR_CATEGORIA');

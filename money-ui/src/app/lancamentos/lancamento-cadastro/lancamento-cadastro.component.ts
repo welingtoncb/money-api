@@ -73,8 +73,6 @@ export class LancamentoCadastroComponent implements OnInit {
     .then(lancamentoAdicionado => {
       this.toasty.success('Lançamento adicionado com sucesso!');
 
-      // form.reset();
-      // this.lancamento = new Lancamento();
       this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
     })
     .catch(erro => this.errorHandler.handle(erro));
@@ -117,5 +115,4 @@ export class LancamentoCadastroComponent implements OnInit {
   atualizarTituloEdicao() {
     this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`)
   }
-
 }

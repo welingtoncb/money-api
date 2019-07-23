@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { HttpModule } from '@angular/http';
+import { SegurancaModule } from './seguranca/seguranca.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HttpModule } from '@angular/http';
     CoreModule,
     LancamentosModule,
     PessoasModule,
+    SegurancaModule,
     AppRoutingModule
   ],
   providers: [],
