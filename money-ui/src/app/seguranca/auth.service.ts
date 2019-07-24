@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import 'rxjs/add/operator/toPromise';
+import { Injectable } from '@angular/core';
+
 import { JwtHelper } from 'angular2-jwt';
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthService {
+
   oauthTokenUrl = 'http://localhost:8080/oauth/token';
   jwtPayload: any;
 
@@ -16,15 +18,15 @@ export class AuthService {
   }
 
   login(usuario: string, senha: string): Promise<void> {
-
     const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
     // Na teoria, quem desenvolveu a API que deverá ter essas credenciais.
     headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
+    return this.http.post(this.oauthTokenUrl, body,
+        { headers, withCredentials: true })
       .toPromise()
       .then(response => {
         this.armazenarToken(response.json().access_token);
@@ -34,7 +36,7 @@ export class AuthService {
           const responseJson = response.json();
 
           if (responseJson.error === 'invalid_grant') {
-            return Promise.reject('Usuário ou senha inválida');
+            return Promise.reject('Usuário ou senha inválida!');
           }
         }
 
@@ -44,26 +46,30 @@ export class AuthService {
 
   obterNovoAccessToken(): Promise<void> {
     const headers = new Headers();
-    // Na teoria, quem desenvolveu a API que deverá ter essas credenciais.
-    headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
 
     const body = 'grant_type=refresh_token';
 
-    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
+    return this.http.post(this.oauthTokenUrl, body,
+        { headers, withCredentials: true })
       .toPromise()
       .then(response => {
         this.armazenarToken(response.json().access_token);
 
-        console.log('Novo access token criado');
-        return Promise.resolve(null);
-      })
-      .catch(response => {
-        console.log('Erro ao renovar token', response);
+        console.log('Novo access token criado!');
 
         return Promise.resolve(null);
       })
-      ;
+      .catch(response => {
+        console.error('Erro ao renovar token.', response);
+        return Promise.resolve(null);
+      });
+  }
+
+  limparAccessToken() {
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
   }
 
   isAccessTokenInvalido() {
