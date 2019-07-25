@@ -24,3 +24,8 @@ ng build --prod
 
 ## Rodar servidor NodeJS
 node server.js
+
+## Comando para criar apps no heroku exemplo
+heroku apps:create money-angular-wcb
+URL Criada: https://money-angular-wcb.herokuapp.com/
+Git: https://git.heroku.com/money-angular-wcb.git
