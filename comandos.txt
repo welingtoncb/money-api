@@ -1,17 +1,26 @@
 java -jar money-api-1.0.0-SNAPSHOT.jar --spring.datasource.username=root --spring.datasource.password=123456 --money.origin-permitida=http://localhost:4200 --spring.profiles.active=oauth-security
 
-Usuário com poder de administrador
+## Usuário com poder de administrador
 User: admin@gmail.com
 Password: admin
 
-Usuário com menos permissões
+## Usuário com menos permissões
 User: maria@gmail.com
 Password: maria
 
-Usuário para conseguir autorização
+## Usuário para conseguir autorização
 User: angular
 Senha:@ngul@r0 
 
-Sites úteis:
+## Sites úteis:
 https://www.base64encode.org/
 http://jwt.io
+
+## Comando build
+ng build --enviroment=prod
+
+## Comando build - Otimizar a pasta dist que é gerada
+ng build --prod
+
+## Rodar servidor NodeJS
+node server.js
