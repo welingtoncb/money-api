@@ -29,3 +29,7 @@ node server.js
 heroku apps:create money-angular-wcb
 URL Criada: https://money-angular-wcb.herokuapp.com/
 Git: https://git.heroku.com/money-angular-wcb.git
+
+## Comando heroku para saber configurações
+heroku config
+
