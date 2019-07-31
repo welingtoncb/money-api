@@ -15,6 +15,7 @@ Senha:@ngul@r0
 ## Sites úteis:
 https://www.base64encode.org/
 http://jwt.io
+https://update.angular.io/
 
 ## Comando build
 ng build --enviroment=prod
@@ -32,4 +33,7 @@ Git: https://git.heroku.com/money-angular-wcb.git
 
 ## Comando heroku para saber configurações
 heroku config
+
+## Comando heroku para zerar variáveis de número máximo de conexão do MySQL
+heroku addons:create cleardb:ignite
 
