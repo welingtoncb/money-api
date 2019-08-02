@@ -8,7 +8,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TooltipModule } from 'primeng/tooltip';
-import { DataTableModule } from 'primeng/datatable';
+import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -23,7 +23,7 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
     FormsModule,
     InputTextModule,
     ButtonModule,
-    DataTableModule,
+    TableModule,
     TooltipModule,
     InputTextareaModule,
     CalendarModule,

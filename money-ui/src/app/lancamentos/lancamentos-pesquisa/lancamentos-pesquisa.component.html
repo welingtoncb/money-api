@@ -13,13 +13,13 @@
 
       <div class="ui-g-12">
         <label style="display: block">Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }"
-        name="vencimentoInicio" [(ngModel)]="filtro.dataVencimentoInicio"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }" name="vencimentoInicio"
+          [(ngModel)]="filtro.dataVencimentoInicio"></p-calendar>
 
         <label>até</label>
 
-        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }"
-        name="vencimentoFim" [(ngModel)]="filtro.dataVencimentoFim"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }" name="vencimentoFim"
+          [(ngModel)]="filtro.dataVencimentoFim"></p-calendar>
       </div>
 
       <div class="ui-g-12">
@@ -31,34 +31,45 @@
 
   <div class="ui-g">
     <div class="ui-g-12">
-      <p-dataTable [value]="lancamentos" [paginator]="true" [rows]="filtro.itensPorPagina" [responsive]="true"
-      emptyMessage="Nenhum lançamento encontrado!" [lazy]="true" [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)"
-      #tabela>
-      <p-column field="pessoa" header="Pessoa"></p-column>
-      <p-column field="descricao" header="Descrição"></p-column>
-      <p-column header="Vencimento" styleClass="col-data">
-      <ng-template let-lanc="rowData" pTemplate="body">
-        {{lanc.dataVencimento | date: 'dd/MM/y'}}
-      </ng-template>
-      </p-column>
-      <p-column header="Pagamento" styleClass="col-data">
-      <ng-template let-lanc="rowData" pTemplate="body">
-        {{lanc.dataPagamento | date: 'dd/MM/y'}}
-      </ng-template>
-      </p-column>
-      <p-column field="valor" header="Valor" styleClass="col-valor">
-      <ng-template let-lanc="rowData" pTemplate="body">
-        <span [style.color]="lanc.tipo === 'DESPESA' ? 'red' : 'blue'">{{lanc.valor | number:'1.2-2'}}</span>
-      </ng-template>
-      </p-column>
-      <p-column styleClass="col-acoes">
-        <ng-template let-lanc="rowData" pTemplate="body">
-          <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top" [routerLink]="['/lancamentos', lanc.codigo]"></a>
-          <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(lanc)"
-          [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
+      <p-table [value]="lancamentos" [paginator]="true" [rows]="filtro.itensPorPagina" [responsive]="true" [lazy]="true"
+        [totalRecords]="totalRegistros" (onLazyLoad)="aoMudarPagina($event)" #tabela>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Pessoa</th>
+            <th>Descrição</th>
+            <th class="col-data-header">Vencimento</th>
+            <th class="col-data-header">Pagamento</th>
+            <th class="col-valor-header">valor</th>
+            <th class="col-acoes-header"></th>
+          </tr>
         </ng-template>
-      </p-column>
-      </p-dataTable>
+
+        <ng-template pTemplate="body" let-lancamento>
+          <tr>
+            <td>{{lancamento.pessoa}}</td>
+            <td>{{lancamento.descricao}}</td>
+            <td class="col-data">{{lancamento.dataVencimento | date: 'dd/MM/y'}}</td>
+            <td class="cold-data">{{lancamento.dataPagamento | date: 'dd/MM/y'}}</td>
+            <td class="col-valor" [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">
+              {{lancamento.valor | number:'1.2-2'}}
+            </td>
+            <td class="col-acoes">
+              <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                [routerLink]="['/lancamentos', lancamento.codigo]"></button>
+              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                (click)="confirmarExclusao(lancamento)"
+                [disabled]="!auth.temPermissao('ROLE_REMOVER_LANCAMENTO')"></button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">Nenhum lançamento encontrado!</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
 
     <div class="ui-g-12">
