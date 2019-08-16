@@ -1,8 +1,6 @@
 package com.example.moneyapi.resource;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +33,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import com.example.moneyapi.dto.Anexo;
 import com.example.moneyapi.dto.LancamentoEstatisticaCategoria;
 import com.example.moneyapi.dto.LancamentoEstatisticaDia;
 import com.example.moneyapi.event.RecursoCriadoEvent;
@@ -45,6 +45,7 @@ import com.example.moneyapi.repository.filter.LancamentoFilter;
 import com.example.moneyapi.repository.projection.ResumoLancamento;
 import com.example.moneyapi.service.LancamentoService;
 import com.example.moneyapi.service.exception.PessoaInexistenteOuInativaException;
+import com.example.moneyapi.storage.S3;
 
 @RestController
 @RequestMapping("/lancamentos")
@@ -62,14 +63,14 @@ public class LancamentoResource {
 	@Autowired
 	private MessageSource messageSource;
 	
+	@Autowired
+	private S3 s3;
+	
 	@PostMapping("/anexo")
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
-	public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
-		OutputStream out = new FileOutputStream(
-				"D:/anexo--" + anexo.getOriginalFilename());
-		out.write(anexo.getBytes());
-		out.close();
-		return "ok";
+	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+		String nome = s3.salvarTemporariamente(anexo);
+		return new Anexo(nome, s3.configurarUrl(nome));
 	}
 
 	@GetMapping("/relatorios/por-pessoa")
