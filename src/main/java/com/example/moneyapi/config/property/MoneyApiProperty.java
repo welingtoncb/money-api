@@ -60,7 +60,7 @@ public class MoneyApiProperty {
 			return secretAccessKey;
 		}
 
-		public void setSecretAccessKeyId(String secretAccessKey) {
+		public void setSecretAccessKey(String secretAccessKey) {
 			this.secretAccessKey = secretAccessKey;
 		}
 	}
